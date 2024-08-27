@@ -69,13 +69,13 @@ const GameController = (() => {
         }
     };
 
+    const winPatterns = [  // Define los patrones ganadores (3 en línea).
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],  // Patrones horizontales.
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],  // Patrones verticales.
+        [0, 4, 8], [2, 4, 6]  // Patrones diagonales.
+    ];
     const findBlockingMove = () => {  // Función que encuentra el movimiento de bloqueo.
         const board = GameBoard.getBoard(); // Obtiene el estado actual del tablero.
-        const winPatterns = [  // Define los patrones ganadores (3 en línea).
-            [0, 1, 2], [3, 4, 5], [6, 7, 8],  // Patrones horizontales.
-            [0, 3, 6], [1, 4, 7], [2, 5, 8],  // Patrones verticales.
-            [0, 4, 8], [2, 4, 6]  // Patrones diagonales.
-        ];
 
         for (let pattern of winPatterns) {  // Recorre cada patrón ganador.
             const [a, b, c] = pattern;  // Desestructura los índices del patrón.
@@ -88,12 +88,6 @@ const GameController = (() => {
 
     const checkWin = () => {  // Función que verifica si hay un ganador.
         const board = GameBoard.getBoard(); // Obtiene el estado actual del tablero.
-        const winPatterns = [  // Define los patrones ganadores (3 en línea).
-            [0, 1, 2], [3, 4, 5], [6, 7, 8],  // Patrones horizontales.
-            [0, 3, 6], [1, 4, 7], [2, 5, 8],  // Patrones verticales.
-            [0, 4, 8], [2, 4, 6]  // Patrones diagonales.
-        ];
-
         return winPatterns.some(pattern =>  // Retorna true si algún patrón ganador es completado por el jugador actual.
             pattern.every(index => board[index] === currentPlayer.marker) // Verifica si todos los índices del patrón tienen el marcador del jugador actual.
         );
