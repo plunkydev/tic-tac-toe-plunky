@@ -119,3 +119,73 @@ const GameController = (() => {
 
     return { getCurrentPlayer, playRound, resetGame }; // Retorna las funciones públicas del módulo (`getCurrentPlayer`, `playRound`, `resetGame`).
 })();
+
+
+const DisplayController = (() => {         // Definición del módulo DisplayController usando una IIFE.
+    const boardElement = document.getElementById("board");  // Obtiene el elemento del tablero en el DOM.
+
+    // Crear celdas
+    const createCells = () => {            // Método para crear las celdas del tablero.
+        for (let i = 0; i < 9; i++) {
+            const cell = document.createElement("div");  // Crea un nuevo elemento div para cada celda.
+            cell.classList.add("cell");    // Añade la clase 'cell' al elemento.
+            cell.addEventListener("click", () => {  // Añade un event listener para manejar clics en la celda.
+                GameController.playRound(i);  // Juega una ronda cuando se hace clic en la celda.
+            });
+            boardElement.appendChild(cell);  // Añade la celda al tablero.
+        }
+    };
+
+    const updateBoard = () => {            // Método para actualizar la visualización del tablero.
+        const board = GameBoard.getBoard();  // Obtiene el estado actual del tablero.
+        const cells = document.querySelectorAll(".cell");  // Selecciona todas las celdas en el DOM.
+        cells.forEach((cell, index) => {   // Itera sobre las celdas.
+            cell.textContent = board[index];  // Actualiza el contenido de cada celda.
+            cell.classList.remove("player1", "player2");  // Elimina las clases CSS previas.
+            if (board[index] === "X") {
+                cell.classList.add("player1");  // Añade la clase 'player1' si la celda tiene una 'X'.
+            } else if (board[index] === "O") {
+                cell.classList.add("player2");  // Añade la clase 'player2' si la celda tiene una 'O'.
+            }
+        });
+    };
+
+    const restartButton = document.getElementById("restart-button");  // Obtiene el botón de reinicio en el DOM.
+    restartButton.addEventListener("click", () => {  // Añade un event listener para manejar clics en el botón de reinicio.
+        pc = false;  // Desactiva el modo PC.
+        GameController.resetGame();  // Reinicia el juego.
+        document.documentElement.style.setProperty('--sombra', 'rgba(248, 203, 248, 0.87)');  // Restaura el estilo de sombra.
+        updateBoard();  // Actualiza la visualización del tablero.
+    });
+    const botonVs = document.getElementById('vsPc');  // Obtiene el botón VS en el DOM.
+
+    const isPcplay = () => { // Declara una función flecha llamada isPcplay que actúa como método.
+        GameController.resetGame(); // Llama al método resetGame del objeto GameController para reiniciar el juego.
+    
+        if(pc) { // Verifica si la variable pc es true (es decir, si el modo PC está activado).
+            pc = false; // Si pc es true, lo cambia a false para desactivar el modo PC.
+            botonVs.classList.remove("vsActive"); // Elimina la clase 'vsActive' del botón VS.
+            botonVs.classList.add('vs'); // Añade la clase 'vs' al botón VS.
+            botonVs.innerText = "Iron Man VS Cap America"; // Cambia el texto del botón a "Iron Man VS Cap America".
+            document.documentElement.style.setProperty('--sombra', 'rgba(248, 203, 248, 0.87)'); // Cambia el color de la sombra a un tono específico.
+    
+        } else { // Si pc es false (es decir, si el modo PC no está activado).
+            pc = true; // Cambia pc a true para activar el modo PC.
+            botonVs.classList.remove("vs"); // Elimina la clase 'vs' del botón VS.
+            botonVs.classList.add('vsActive'); // Añade la clase 'vsActive' al botón VS.
+            botonVs.innerText = "Iron Man VS Ultron"; // Cambia el texto del botón a "Iron Man VS Ultron".
+            document.documentElement.style.setProperty('--sombra', 'rgba(255, 0, 0, 0.525'); // Cambia el color de la sombra a otro tono específico.
+        }
+    }
+    
+    let pc = false;
+    const getPc = () => pc;                 // Método para obtener el estado del modo PC.
+    botonVs.addEventListener('click', isPcplay); // Añade un event listener para manejar clics en el botón VS.
+
+    createCells(); // Llama al método para crear las celdas del tablero al cargar la página.
+
+    return { updateBoard,  getPc, botonVs, isPcplay };  // Expone los métodos `createCells`, `updateBoard`, isPcPlay,`getPc` y el botonVs como API pública del módulo.
+})();
+
+// Inicializa el juego
+GameController.resetGame();
