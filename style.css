@@ -20,3 +20,122 @@ H1 {
     text-align: center;
     color: var(--color-primario);
 }
+
+#game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 4px solid var(--color-secundario);
+    padding: 20px;
+    border-radius: 10px;
+    -webkit-box-shadow: -5px -3px 31px 4px var(--sombra);
+    -moz-box-shadow: -5px -3px 31px 4px var(--sombra);
+    box-shadow: -5px -3px 31px 4px var(--sombra);
+}
+
+#board {
+    display: grid;
+    grid-template-columns: repeat(3, 180px);
+    grid-template-rows: repeat(3, 180px);
+    gap: 10px;
+}
+
+.cell {
+    width: 180px;
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10em;
+    background-color: #fff;
+    border: 3px solid var(--color-secundario);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: opacity 0.5s ease, color 1s ease, text-shadow 0.3s ease;
+}
+
+.cell.show {
+    opacity: 1; 
+}
+
+.cell.player1 {
+    color: rgba(255, 0, 0, 0.525);
+    text-shadow: 2px 2px 5px rgba(255, 0, 0, 0.5);
+}
+
+.cell.player2 {
+    color: rgba(55, 55, 221, 0.596);
+    text-shadow: 2px 2px 5px rgba(0, 0, 255, 0.5);
+}
+
+#game-info {
+    text-align: center;
+}
+
+#restart-button, .vs {
+    padding: 10px;
+    margin: 5px 0;
+    width: 100%;
+    font-size: 1.5em;
+    cursor: pointer;
+    font-family: "Orbitron", sans-serif;
+    font-weight: 500;
+    color: #fff;
+    background-color: var(--color-primario);
+    border: none;
+}
+
+.vsActive {
+    padding: 10px;
+    margin: 5px 0;
+    width: 100%;
+    font-size: 1.5em;
+    cursor: pointer;
+    font-family: "Orbitron", sans-serif;
+    font-weight: 500;
+    color: #fff;
+    background-color: rgba(255, 0, 0, 0.527);
+    border: none;
+}
+
+#game-status {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-primario);
+}
+
+@media (max-width: 600px) {
+    #board {
+        grid-template-columns: repeat(3, 100px);
+        grid-template-rows: repeat(3, 100px);
+        gap: 5px;
+    }
+
+    #game-container {
+        border: 2px solid #f8cbf8;
+        padding: 7px;
+        border-radius: 7px;
+        max-height: 700px !important;
+    }
+
+    h1 {
+        font-size: 1.1em;
+    }
+
+
+    .cell {
+        width: 100px;
+        height: 100px;
+        font-size: 5rem;
+    }
+
+    #game-status {
+        font-size: 1.2rem;
+        font-weight: 500;
+    }
+
+    #restart-button, .vs, .vsActive {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+}
